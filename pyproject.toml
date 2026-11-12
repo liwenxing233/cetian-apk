@@ -5,7 +5,6 @@ bundle = "com.cetian.beeware"
 version = "0.0.1"
 url = "https://beeware.cetian.com/cetian_beeware"
 license = "BSD-3-Clause"
-
 author = "lwx"
 author_email = "123456789"
 
@@ -42,71 +41,51 @@ requires = [
 
 [tool.briefcase.app.cetian_beeware.linux.system.debian]
 system_requires = [
-    # Needed to compile pycairo wheel
     "libcairo2-dev",
     "libgirepository-2.0-dev",
 ]
 
 system_runtime_requires = [
-    # Needed to provide GTK and its GI bindings
     "gir1.2-gtk-3.0",
     "libgirepository-2.0-0",
-    # Dependencies that GTK looks for at runtime
     "libcanberra-gtk3-module",
 ]
 
 [tool.briefcase.app.cetian_beeware.linux.system.rhel]
 system_requires = [
-    # Needed to compile pycairo wheel
     "cairo-gobject-devel",
-    # Needed to compile PyGObject wheel
     "gobject-introspection-devel",
 ]
 
 system_runtime_requires = [
-    # Needed to support Python bindings to GTK
     "gobject-introspection",
-    # Needed to provide GTK
     "gtk3",
-    # Dependencies that GTK looks for at runtime
     "libcanberra-gtk3",
 ]
 
 [tool.briefcase.app.cetian_beeware.linux.system.suse]
 system_requires = [
-    # Needed to compile pycairo wheel
     "cairo-devel",
-    # Needed to compile PyGObject wheel
     "gobject-introspection-devel",
 ]
 
 system_runtime_requires = [
-    # Needed to provide GTK
     "gtk3",
-    # Needed to support Python bindings to GTK
     "gobject-introspection", "typelib(Gtk) = 3.0",
-    # Dependencies that GTK looks for at runtime
     "libcanberra-gtk3-module",
 ]
 
 [tool.briefcase.app.cetian_beeware.linux.system.arch]
 system_requires = [
-    # Needed to compile pycairo wheel
     "cairo",
-    # Needed to compile PyGObject wheel
     "gobject-introspection",
-    # Needed to provide GTK
     "gtk3",
-    # Dependencies that GTK looks for at runtime
     "libcanberra",
 ]
 
 system_runtime_requires = [
-    # Needed to provide GTK
     "gtk3",
-    # Needed to provide PyGObject bindings
     "gobject-introspection-runtime",
-    # Dependencies that GTK looks for at runtime
     "libcanberra",
 ]
 
@@ -114,14 +93,9 @@ system_runtime_requires = [
 manylinux = "manylinux_2_28"
 
 system_requires = [
-    # Needed to compile pycairo wheel
     "cairo-gobject-devel",
-    # Needed to compile PyGObject wheel
     "gobject-introspection-devel",
-    # Needed to provide GTK
     "gtk3-devel",
-    # Dependencies that GTK looks for at runtime, that need to be
-    # in the build environment to be picked up by linuxdeploy
     "libcanberra-gtk3",
     "PackageKit-gtk3-module",
     "gvfs-client",
@@ -141,7 +115,6 @@ requires = [
     "toga-winforms~=0.5.0",
 ]
 
-# Mobile deployments
 [tool.briefcase.app.cetian_beeware.iOS]
 requires = [
     "toga-iOS~=0.5.0",
@@ -157,6 +130,15 @@ base_theme = "Theme.MaterialComponents.Light.DarkActionBar"
 build_gradle_dependencies = [
     "com.google.android.material:material:1.13.0",
 ]
+
+# 👇 添加这部分，强制 Chaquopy 从源码构建 lunar-python
+build_gradle_extra_content = """
+android.defaultConfig.python {
+    pip {
+        options("--no-binary", ":all:")
+    }
+}
+"""
 
 [tool.briefcase.app.cetian_beeware.web]
 requires = [
