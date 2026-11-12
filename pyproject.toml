@@ -5,7 +5,7 @@ bundle = "com.cetian.beeware"
 version = "0.0.1"
 url = "https://beeware.cetian.com/cetian_beeware"
 license = "BSD-3-Clause"
-license-files = ["LICENSE"]
+
 author = "lwx"
 author_email = "123456789"
 
